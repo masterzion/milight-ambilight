@@ -18,7 +18,7 @@ interval = 100
 
 
 # Create an array of points (pixels) to be monitored
-def MonitoredPoints():
+def MonitoredPoints(interval):
 	app = wx.PySimpleApp()
 	screensize = wx.GetDisplaySize()
 
