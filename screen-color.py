@@ -31,7 +31,7 @@ def MonitoredPoints(interval):
 
 	return monitoredpoints
 
-def CurrentColor(points, pointcount):
+def CurrentColor(points, count):
 	# get screen point colors
 	# http://stackoverflow.com/questions/27395968/get-screen-pixel-color-linux-python3
 	w = gtk.gdk.get_default_root_window()
@@ -52,9 +52,9 @@ def CurrentColor(points, pointcount):
 		blue  = blue + color[2]
 
 	# divide by point count
-	red = red / pointcount
-	green = green / pointcount
-	blue = blue / pointcount
+	red = red / count
+	green = green / count
+	blue = blue / count
 
 	return (red, green, blue)
 
@@ -83,12 +83,13 @@ time_interval    =  config.getfloat('CPU_OPTMIZATION', 'time_interval') # time i
 debug            =  config.getboolean('CPU_OPTMIZATION', 'debug') # show color
 
 points = MonitoredPoints(pixel_interval)
-pointcount = len(points)
+count = len(points)
+
 controller = milight.MiLight({'host': milight_hostname, 'port': 8899}, wait_duration=0) 
 
 # main loop
 while True:
-	actualcolor =CurrentColor(points, pointcount)
+	actualcolor =CurrentColor(points, count)
 	milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2])
 	if debug :
 		print   actualcolor 
