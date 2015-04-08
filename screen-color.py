@@ -63,7 +63,7 @@ def CurrentColor(points, pointcount):
 
 	return (red, green, blue)
 
-points = MonitoredPoints()
+points = MonitoredPoints(interval)
 pointcount = len(points)
 
 
