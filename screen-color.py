@@ -86,7 +86,7 @@ points = MonitoredPoints(pixel_interval)
 pointcount = len(points)
 controller = milight.MiLight({'host': milight_hostname, 'port': 8899}, wait_duration=0) 
 
-# execute each 0.1 milisecond
+# main loop
 while True:
 	actualcolor =CurrentColor(points, pointcount)
 	milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2])
