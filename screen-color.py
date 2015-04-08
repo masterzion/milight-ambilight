@@ -3,20 +3,16 @@
 # 
 # Autor: Jairo Moreno
 #
-# Get One single color to represent the screen
+# Get One single color to represent the screen and send to Milight
 # 
-
 
 import gtk.gdk
 import sys
 import wx
-from time import sleep
 import milight
-
-# interval between pixels
-# less interval will increase the cpu usage
-interval = 100
-
+import os
+from ConfigParser import SafeConfigParser
+from time import sleep
 
 # Create an array of points (pixels) to be monitored
 def MonitoredPoints(interval):
@@ -35,12 +31,9 @@ def MonitoredPoints(interval):
 
 	return monitoredpoints
 
-
-
-
 def CurrentColor(points, pointcount):
-    # get screen point colors
-    # http://stackoverflow.com/questions/27395968/get-screen-pixel-color-linux-python3
+	# get screen point colors
+	# http://stackoverflow.com/questions/27395968/get-screen-pixel-color-linux-python3
 	w = gtk.gdk.get_default_root_window()
 	sz = w.get_size()
 	pb = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,False,8,sz[0],sz[1])
@@ -75,13 +68,29 @@ def CurrentColor(points, pointcount):
 #def rgb_to_hex(rgb):
 #	return '#%02x%02x%02x' % rgb
 
-points = MonitoredPoints(interval)
+
+# load config files
+app_path = os.path.dirname(os.path.realpath(__file__))
+
+
+config = SafeConfigParser()
+config.read( app_path + "/config.ini")
+
+milight_hostname = config.get('MILIGHT','hostname')
+milight_port     = config.getint('MILIGHT','port')
+pixel_interval   = config.getint('CPU_OPTMIZATION', 'pixel_interval') # interval between pixels
+time_interval    =  config.getfloat('CPU_OPTMIZATION', 'time_interval') # time interval 
+debug            =  config.getboolean('CPU_OPTMIZATION', 'debug') # show color
+
+points = MonitoredPoints(pixel_interval)
 pointcount = len(points)
-controller = milight.MiLight({'host': '192.168.1.110', 'port': 8899}, wait_duration=0) 
+controller = milight.MiLight({'host': milight_hostname, 'port': 8899}, wait_duration=0) 
 
 # execute each 0.1 milisecond
 while True:
 	actualcolor =CurrentColor(points, pointcount)
 	milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2])
-#	print  rgb_to_hex( actualcolor )
-	sleep(0.1)
+	if debug :
+		print   actualcolor 
+	sleep(time_interval)
+
