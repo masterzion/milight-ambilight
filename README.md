@@ -1,6 +1,7 @@
 # python-milight-screen-color
 
-Get One single color to represent the screen and send to MiLight Connector
+Get One single color to represent the screen and send to MiLight Connector.
+
 Let's make our movie more realistic? ;)
 
 [![Milight Home page](http://cdn2.bigcommerce.com/n-d57o0b/jesswyt/products/78/images/266/milight_bulb1__74439.1404685995.220.290.jpg?c=2)](http://www.milight.com/milight-rgbw/)
