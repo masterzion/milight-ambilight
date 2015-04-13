@@ -17,16 +17,15 @@ sudo pip install milight
 ```
 
 **2) Configuration**
-
-MILIGHT
-
 ``` ini
+[MILIGHT]
 hostname: Milight Hostname
 port: Milight port
 light_group: group of light to change colors
-CPU_OPTMIZATION
+
+[CPU_OPTMIZATION]
 pixel_interval: interval between pixels (you don't need to check all pixels )
-time_interval: sleep time 
+time_interval: sleep time
 debug: show current color
 ```
 
