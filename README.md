@@ -1,6 +1,6 @@
 # python-milight-screen-color
 
-Get One single color to represent the screen and send to MiLight Connector.
+Get One single color to represent the screen and send to MiLight/LimitlessLed Connector.
 
 Let's make our movies and games more realistic? ;)
 
