@@ -23,8 +23,8 @@ def MonitoredPoints(interval):
     county = screensize[1] / interval
 
     monitoredpoints = []
-    for x in range(1, countx-1):
-        for y in range(1, county-1):
+    for x in range(2, countx-2): # ignore the borders
+        for y in range(1, county-1): # ignore the borders
             if debug :
                 print  " monitored points: " + str( x * interval ) + " - " + str ( y * interval )
             monitoredpoints.append([x * interval, y * interval])
@@ -41,25 +41,28 @@ def CurrentColor(points, count):
     pixel_array = pb.get_pixels_array()
 
     #sum colors of all monitored pixels
-    red = 0
+    red   = 0
     green = 0
-    blue = 0
+    blue  = 0
     if debug :
         print "======="
+
     for point in points:
         color = pixel_array[point[1]] [point[0]]
         if debug :
             print pixel_array[point[1]] [point[0]]
 
-        red   = red + color[0]
+        red   = red   + color[0]
         green = green + color[1]
-        blue  = blue + color[2]
+        blue  = blue  + color[2]
+
     if debug :
         print "======="
+
     # divide by point count
-    red = int ( red / count )
+    red   = int ( red   / count )
     green = int ( green / count )
-    blue = int ( blue / count )
+    blue  = int ( blue  / count )
 
     return (red, green, blue)
 
