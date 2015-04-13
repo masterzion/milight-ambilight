@@ -7,6 +7,15 @@ Let's make our movies and games more realistic? ;)
 [![Milight Home page](http://cdn2.bigcommerce.com/n-d57o0b/jesswyt/products/78/images/266/milight_bulb1__74439.1404685995.220.290.jpg?c=2)](http://www.milight.com/milight-rgbw/)
 
 
+**Instalation**
+
+sudo apt-get install python-dev python-wxtools
+
+sudo pip install -U numpy
+
+sudo pip install milight
+
+
 
 **Configuration**
 
