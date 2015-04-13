@@ -44,17 +44,22 @@ def CurrentColor(points, count):
     red = 0
     green = 0
     blue = 0
+    if debug :
+        print "======="
     for point in points:
         color = pixel_array[point[1]] [point[0]]
+        if debug :
+            print pixel_array[point[1]] [point[0]]
 
         red   = red + color[0]
         green = green + color[1]
         blue  = blue + color[2]
-
+    if debug :
+        print "======="
     # divide by point count
-    red = red / count
-    green = green / count
-    blue = blue / count
+    red = int ( red / count )
+    green = int ( green / count )
+    blue = int ( blue / count )
 
     return (red, green, blue)
 
