@@ -23,8 +23,8 @@ def MonitoredPoints(interval):
     county = screensize[1] / interval
 
     monitoredpoints = []
-    for x in range(2, countx-2): # ignore the borders
-        for y in range(1, county-1): # ignore the borders
+    for x in range(30, countx-10): # ignore the borders
+        for y in range(10, county-10): # ignore the borders
             if debug :
                 print  " monitored points: " + str( x * interval ) + " - " + str ( y * interval )
             monitoredpoints.append([x * interval, y * interval])
@@ -60,9 +60,9 @@ def CurrentColor(points, count):
         print "======="
 
     # divide by point count
-    red   = int ( red   / count )
-    green = int ( green / count )
-    blue  = int ( blue  / count )
+    red   = int ( red   / count ) + 10
+    green = int ( green / count ) + 10
+    blue  = int ( blue  / count ) + 10
 
     return (red, green, blue)
 
@@ -84,16 +84,13 @@ count = len(points)
 
 
 controller = milight.MiLight({'host': milight_hostname, 'port': milight_port}, wait_duration=0) 
-light = milight.LightBulb(['rgbw']) #Can specify which types of bulbs to use
-controller.send(light.on(light_group)) # Turn on group 1 lights
-controller.send(light.all_on()) # Turn on all lights, equivalent to light.on(0)
-
+light = milight.LightBulb(['rgbw']) # Can specify which types of bulbs to use
+controller.send(light.on(light_group)) # Turn on light_group lights
 
 # main loop
 while True:
-    actualcolor =CurrentColor(points, count)
-    controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]), 1)) # Change group 1 color to Red
+    actualcolor = CurrentColor(points, count)
+    controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]), 1)) # Change light_group to current color
     if debug :
         print   actualcolor 
     sleep(time_interval)
-
