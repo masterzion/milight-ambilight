@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # 
 # Autor: Jairo Moreno
@@ -6,65 +5,14 @@
 # Get One single color to represent the screen and send to Milight
 # 
 
-import gtk.gdk
 import sys
-import wx
 import milight
 import os
-from ConfigParser import SafeConfigParser
+
 from time import sleep
 
-# Create an array of points (pixels) to be monitored
-def MonitoredPoints(interval):
-    app = wx.PySimpleApp()
-    screensize = wx.GetDisplaySize()
-
-    countx = screensize[0] / interval
-    county = screensize[1] / interval
-
-    monitoredpoints = []
-    for x in range(30, countx-10): # ignore the borders
-        for y in range(10, county-10): # ignore the borders
-            if debug :
-                print  " monitored points: " + str( x * interval ) + " - " + str ( y * interval )
-            monitoredpoints.append([x * interval, y * interval])
-
-    return monitoredpoints
-
-def CurrentColor(points, count):
-    # get screen point colors based in
-    # http://stackoverflow.com/questions/27395968/get-screen-pixel-color-linux-python3
-    w = gtk.gdk.get_default_root_window()
-    sz = w.get_size()
-    pb = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB,False,8,sz[0],sz[1])
-    pb = pb.get_from_drawable(w,w.get_colormap(),0,0,0,0,sz[0],sz[1])
-    pixel_array = pb.get_pixels_array()
-
-    #sum colors of all monitored pixels
-    red   = 0
-    green = 0
-    blue  = 0
-    if debug :
-        print "======="
-
-    for point in points:
-        color = pixel_array[point[1]] [point[0]]
-        if debug :
-            print pixel_array[point[1]] [point[0]]
-
-        red   = red   + color[0]
-        green = green + color[1]
-        blue  = blue  + color[2]
-
-    if debug :
-        print "======="
-
-    # divide by point count
-    red   = int ( red   / count ) + 10
-    green = int ( green / count ) + 10
-    blue  = int ( blue  / count ) + 10
-
-    return (red, green, blue)
+from milight_ambilight import MilightAmbilight
+from ConfigParser import SafeConfigParser
 
 # load config files
 app_path = os.path.dirname(os.path.realpath(__file__))
@@ -74,14 +22,17 @@ config.read( app_path + "/config.ini")
 
 milight_hostname = config.get('MILIGHT','hostname')
 milight_port     = config.getint('MILIGHT','port')
-light_group     = config.getint('MILIGHT','light_group')
+light_group      = config.getint('MILIGHT','light_group')
 pixel_interval   = config.getint('CPU_OPTMIZATION', 'pixel_interval') # interval between pixels
 time_interval    = config.getfloat('CPU_OPTMIZATION', 'time_interval') # time interval 
 debug            = config.getboolean('CPU_OPTMIZATION', 'debug') # show color
 
-points = MonitoredPoints(pixel_interval)
-count = len(points)
+# load Ambilight class
+myAmbilight = MilightAmbilight()
+myAmbilight.debug =  debug
 
+points = myAmbilight.MonitoredPoints(pixel_interval)
+count = len(points)
 
 controller = milight.MiLight({'host': milight_hostname, 'port': milight_port}, wait_duration=0) 
 light = milight.LightBulb(['rgbw']) # Can specify which types of bulbs to use
@@ -89,8 +40,8 @@ controller.send(light.on(light_group)) # Turn on light_group lights
 
 # main loop
 while True:
-    actualcolor = CurrentColor(points, count)
-    controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]), 1)) # Change light_group to current color
+    actualcolor = myAmbilight.CurrentColor(points, count)
+    controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]), light_group)) # Change light_group to current color
     if debug :
         print   actualcolor 
     sleep(time_interval)
