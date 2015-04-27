@@ -118,7 +118,7 @@
             </child>
             <child>
               <widget class="GtkCheckButton" id="checkambilight">
-                <property name="label" translatable="yes">Ambilight</property>
+                <property name="label" translatable="yes">Ambilight effect (based on screen color)</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
