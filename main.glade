@@ -5,8 +5,10 @@
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">MiLight AmbiLight Gui</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
+    <property name="icon">migui.ico</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
       <widget class="GtkNotebook" id="notebook1">
@@ -30,6 +32,7 @@
                     <property name="xalign">0.50999999046325684</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_checkbutton1_toggled" swapped="no"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -46,6 +49,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_checkbutton2_toggled" swapped="no"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -62,6 +66,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_checkbutton3_toggled" swapped="no"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -78,6 +83,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_checkbutton4_toggled" swapped="no"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -388,7 +394,7 @@
               <widget class="GtkLabel" id="label6">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">MiLight GUI - v0.2</property>
+                <property name="label" translatable="yes">MiLight GUI - v. 0.3</property>
               </widget>
               <packing>
                 <property name="expand">True</property>

@@ -3,6 +3,7 @@ import gtk
 import gtk.glade
 import milight
 import time
+import os
 
 
 from milight_config import MilightConfig
@@ -16,34 +17,30 @@ def rgb16_to_rgb8(value):
     return tuple(int(v/257.0) for v in value)
 
 
-
-'''
-
-    def __init__(self, controller, light, color, groups, interval):
-        super(ThreadSendSingle, self).__init__()
-        threading.Thread.__init__(self)
-        self.controller = controller
-        self.light      = light
-        self.color      = color
-        self.groups     = groups
-        self.interval   = interval
-'''
-
-
 class ShowMain:
     global color
     def __init__(self):
+        #set Icon
+        app_path = os.path.dirname(os.path.realpath(__file__))
+        self.window = gtk.Window()
+        self.window.set_icon_from_file(app_path+'/migui.ico')
+
         #Set the Glade file
         gtk.gdk.threads_init()
         self.gladefile = "main.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
-        self.wTree.signal_connect("on_colorselection1_color_changed", self.set_color)
-        self.wTree.signal_connect("on_btnSave_clicked",               self.save_config)
+
+        # set functions        
         self.wTree.signal_connect("gtk_main_quit",                    self.on_destroy)
-        self.wTree.signal_connect("on_checkambilight_toggled",        self.execAmbilight)
-        
-        
-    
+
+        self.wTree.signal_connect("on_colorselection1_color_changed", self.set_color)
+        self.wTree.signal_connect("on_checkbutton1_toggled",          self.set_color)
+        self.wTree.signal_connect("on_checkbutton2_toggled",          self.set_color)
+        self.wTree.signal_connect("on_checkbutton3_toggled",          self.set_color)
+        self.wTree.signal_connect("on_checkbutton4_toggled",          self.set_color)
+        self.wTree.signal_connect("on_checkambilight_toggled",        self.colorselection1_click)
+
+        self.wTree.signal_connect("on_btnSave_clicked",               self.save_config)
 
         # get components
         self.colorselection1 = self.wTree.get_widget("colorselection1");
@@ -55,75 +52,85 @@ class ShowMain:
 
         # load config
         self.config = MilightConfig()
-
+        self.ambilight_checked = False
+        self.TimerInterval = 0
         self.wTree.get_widget("edtHost").set_text( self.config.milight_hostname ) 
         self.wTree.get_widget("edtPort").set_value( self.config.milight_port ) 
-        self.wTree.get_widget("hscalepixel").set_value( self.config.pixel_interval );
-        self.wTree.get_widget("hscaleinterval").set_value( self.config.time_interval * 1000 ) 
+        self.wTree.get_widget("hscalepixel").set_value( self.config.pixel_interval )
         self.wTree.get_widget("checkdebug").set_active( self.config.debug ) 
+
+        self.wTree.get_widget("hscaleinterval").set_value( self.config.time_interval * 1000 ) 
+        self.setTimerInterval ( self.config.time_interval * 1000 )
+
 
         # connect
         light = milight.LightBulb(['rgbw'])
         self.controller = milight.MiLight({'host': self.config.milight_hostname, 'port': self.config.milight_port}, wait_duration=0) 
         self.light = milight.LightBulb(['rgbw'])
         self.window = self.wTree.get_widget("MainWindow")
-
-
         self.controller.send(light.all_on())
+
+        self.myAmbilight =  MilightAmbilight()
+        self.myAmbilight.MonitoredPoints( self.config.pixel_interval )
+        self.set_color(self)
+
+        # start thread
+        gtk.timeout_add( int( self.config.time_interval * 1000  ), self.sendThread)
 
         if (self.window):
             self.window.connect("destroy", gtk.main_quit)
 
+    def sendThread(self):
+        # user selected color or ambilight
+        if ( self.ambilight_checked ):
+            color = self.myAmbilight.CurrentColor()
+        else:
+            color = self.color
 
-    #def sendFunction(self, pixel_interval, time_interval ):
-    #    myAmbilight =  MilightAmbilight()
-    #    myAmbilight.MonitoredPoints( pixel_interval )
-    #    while True:
-    #       actualcolor = myAmbilight.CurrentColor()
-    #       controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]))) 
-    #       if self.debug :
-    #            print   actualcolor 
-    #       sleep( time_interval )
+        if self.config.debug :
+            print   color
 
-    def execAmbilight(self, widget):
-        print 'not yet :) '
-    #    if ( widget.get_active() ):
-    #        if hasattr( self, 'sendThread' ):
-    #            self.sendThread.terminate()
-    #            gtk.gdk.threads_init()
-    #        print self.config.pixel_interval
-    #        self.sendThread = Process(target=self.sendFunction, args=( 30, 0.1  ) )
-    #        self.sendThread.start()
-    #    else:
-    #        self.sendThread.terminate()
+        # all lights or custom groups
+        if ( len( self.group_array ) == 4 ) :
+            self.controller.send(self.light.color(milight.color_from_rgb( color[0], color[1], color[2] ) ) )
+        else :
+            for group in self.group_array:
+                self.controller.send(self.light.color( milight.color_from_rgb( color[0], color[1], color[2] ) , group)  )
 
+        #new timer interval 
+        if ( self.lastTimerInterval != self.TimerInterval ):
+            self.lastTimerInterval = self.TimerInterval
+            gtk.timeout_add( self.TimerInterval, self.sendThread)
+            return False
+        else :
+            return True
 
-
-
+    def colorselection1_click(self, widget):
+        self.ambilight_checked =  widget.get_active()
+        self.colorselection1.set_sensitive(not self.ambilight_checked) 
 
     def on_destroy(self, widget=None, *data):
         gtk.main_quit
-        self.sendThread.terminate()
-
 
     def save_config(self, widget):
         self.config.milight_hostname  = self.wTree.get_widget("edtHost").get_text() 
         self.config.milight_port      = self.wTree.get_widget("edtPort").get_value() 
         self.config.pixel_interval    = self.wTree.get_widget("hscalepixel").get_value();
         self.config.time_interval     = self.wTree.get_widget("hscaleinterval").get_value() /  1000
+        self.setTimerInterval ( self.wTree.get_widget("hscaleinterval").get_value() )
         self.config.debug             = self.wTree.get_widget("checkdebug").get_active() 
         self.config.save_config()
 
-
-
+    def setTimerInterval(self, TimerInterval):
+        self.lastTimerInterval = self.TimerInterval
+        self.TimerInterval     = int(TimerInterval)
 
     def set_color(self, widget):
         color  = self.colorselection1.get_current_color()
         colorrgb  = (color.red, color.green, color.blue)
-        color = rgb16_to_rgb8( colorrgb )
+        self.color = rgb16_to_rgb8( colorrgb )
 
         group_array = list()
-
 
         if (self.checkBox1.get_active()):
             group_array.append(1)
@@ -137,12 +144,7 @@ class ShowMain:
         if (self.checkBox4.get_active()):
             group_array.append(4)
 
-        if ( len( group_array ) == 4 ) :
-            self.controller.send(self.light.color(milight.color_from_rgb( color[0], color[1], color[2] ) ) )
-        else :
-            for group in group_array:
-                self.controller.send(self.light.color( milight.color_from_rgb( color[0], color[1], color[2] ) , group)  )
-
+        self.group_array = group_array
 
 
 if __name__ == "__main__":
