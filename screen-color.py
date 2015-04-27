@@ -7,41 +7,37 @@
 
 import sys
 import milight
-import os
 
 from time import sleep
-
 from milight_ambilight import MilightAmbilight
-from ConfigParser import SafeConfigParser
+from milight_config import MilightConfig
+
 
 # load config files
-app_path = os.path.dirname(os.path.realpath(__file__))
+config = MilightConfig()
 
-config = SafeConfigParser()
-config.read( app_path + "/config.ini")
+milight_hostname = config.milight_hostname
+milight_port     = config.milight_port
+pixel_interval   = config.pixel_interval
+time_interval    = config.time_interval
+debug            = config.debug
 
-milight_hostname = config.get('MILIGHT','hostname')
-milight_port     = config.getint('MILIGHT','port')
-light_group      = config.getint('MILIGHT','light_group')
-pixel_interval   = config.getint('CPU_OPTMIZATION', 'pixel_interval') # interval between pixels
-time_interval    = config.getfloat('CPU_OPTMIZATION', 'time_interval') # time interval 
-debug            = config.getboolean('CPU_OPTMIZATION', 'debug') # show color
 
 # load Ambilight class
 myAmbilight = MilightAmbilight()
 myAmbilight.debug =  debug
 
 points = myAmbilight.MonitoredPoints(pixel_interval)
-count = len(points)
+count = len(points)+1
 
 controller = milight.MiLight({'host': milight_hostname, 'port': milight_port}, wait_duration=0) 
 light = milight.LightBulb(['rgbw']) # Can specify which types of bulbs to use
-controller.send(light.on(light_group)) # Turn on light_group lights
+controller.send(light.on(1)) # Turn on light_group lights
 
 # main loop
 while True:
     actualcolor = myAmbilight.CurrentColor(points, count)
-    controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]), light_group)) # Change light_group to current color
+    controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]))) 
     if debug :
         print   actualcolor 
-    sleep(time_interval)
+    sleep(config.time_interval)

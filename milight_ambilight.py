@@ -10,8 +10,17 @@ class MilightAmbilight():
         app = wx.PySimpleApp()
         screensize = wx.GetDisplaySize()
 
+        if self.debug :
+            print  screensize
+            print  'interval: ' + str(interval)
+
+
         countx = screensize[0] / interval
         county = screensize[1] / interval
+
+        if self.debug :
+            print  str(countx) + 'x' + str(county)
+
 
         monitoredpoints = []
         for x in range(30, countx-10): # ignore the borders
