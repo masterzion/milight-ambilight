@@ -35,6 +35,8 @@ python screen-color.py
 ```
 
 **4) NEW GUI INTERFACE**
+
+
 ![GUI Interface](http://s15.postimg.org/ezyy5or57/milight_gui1.png)
 
 
