@@ -30,14 +30,18 @@ debug: show current color
 
 **3) Execute**
 ``` bash
-python screen-color.py
-
+./screen-color.py
 ```
 
-**4) NEW GUI INTERFACE**
+
+**4) GUI Interface**
+
+``` bash
+./screen-color-gui.py
+```
 
 
-![GUI Interface](http://s15.postimg.org/ezyy5or57/milight_gui1.png)
+![GUI Interface](http://s7.postimg.org/w593zqguj/milight_gui1.png)
 
 
 
