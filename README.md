@@ -21,7 +21,6 @@ sudo pip install milight
 [MILIGHT]
 hostname: Milight Hostname
 port: Milight port
-light_group: group of light to change colors
 
 [CPU_OPTMIZATION]
 pixel_interval: interval between pixels (you dont need to check all pixels )

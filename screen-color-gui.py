@@ -34,11 +34,14 @@ class ShowMain:
     global color
     def __init__(self):
         #Set the Glade file
+        gtk.gdk.threads_init()
         self.gladefile = "main.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
         self.wTree.signal_connect("on_colorselection1_color_changed", self.set_color)
         self.wTree.signal_connect("on_btnSave_clicked",               self.save_config)
-        self.wTree.signal_connect("gtk_main_quit", self.on_destroy)
+        self.wTree.signal_connect("gtk_main_quit",                    self.on_destroy)
+        self.wTree.signal_connect("on_checkambilight_toggled",        self.execAmbilight)
+        
         
     
 
@@ -66,21 +69,35 @@ class ShowMain:
         self.window = self.wTree.get_widget("MainWindow")
 
 
-
-        #self.sendThread = Process(target=self.sendFunction )
-        #self.sendThread.start()
-
-
         self.controller.send(light.all_on())
 
         if (self.window):
             self.window.connect("destroy", gtk.main_quit)
 
 
-    #def sendFunction(self):
+    #def sendFunction(self, pixel_interval, time_interval ):
+    #    myAmbilight =  MilightAmbilight()
+    #    myAmbilight.MonitoredPoints( pixel_interval )
     #    while True:
-    #        print self.color
-    #        sleep(self.config.time_interval)
+    #       actualcolor = myAmbilight.CurrentColor()
+    #       controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]))) 
+    #       if self.debug :
+    #            print   actualcolor 
+    #       sleep( time_interval )
+
+    def execAmbilight(self, widget):
+        print 'not yet :) '
+    #    if ( widget.get_active() ):
+    #        if hasattr( self, 'sendThread' ):
+    #            self.sendThread.terminate()
+    #            gtk.gdk.threads_init()
+    #        print self.config.pixel_interval
+    #        self.sendThread = Process(target=self.sendFunction, args=( 30, 0.1  ) )
+    #        self.sendThread.start()
+    #    else:
+    #        self.sendThread.terminate()
+
+
 
 
 

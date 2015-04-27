@@ -388,7 +388,7 @@
               <widget class="GtkLabel" id="label6">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">MiLight GUI</property>
+                <property name="label" translatable="yes">MiLight GUI - v0.2</property>
               </widget>
               <packing>
                 <property name="expand">True</property>
@@ -410,14 +410,14 @@
             </child>
             <child>
               <widget class="GtkLinkButton" id="linkbutton1">
-                <property name="label" translatable="yes">button</property>
+                <property name="label" translatable="yes">https://github.com/masterzion/python-milight-screen-color</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="has_tooltip">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="relief">none</property>
-                <property name="uri">http://glade.gnome.org</property>
+                <property name="uri">https://github.com/masterzion/python-milight-screen-color</property>
               </widget>
               <packing>
                 <property name="expand">True</property>

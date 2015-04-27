@@ -27,8 +27,7 @@ debug            = config.debug
 myAmbilight = MilightAmbilight()
 myAmbilight.debug =  debug
 
-points = myAmbilight.MonitoredPoints(pixel_interval)
-count = len(points)+1
+myAmbilight.MonitoredPoints(pixel_interval)
 
 controller = milight.MiLight({'host': milight_hostname, 'port': milight_port}, wait_duration=0) 
 light = milight.LightBulb(['rgbw']) # Can specify which types of bulbs to use
@@ -36,7 +35,7 @@ controller.send(light.on(1)) # Turn on light_group lights
 
 # main loop
 while True:
-    actualcolor = myAmbilight.CurrentColor(points, count)
+    actualcolor = myAmbilight.CurrentColor()
     controller.send(light.color(milight.color_from_rgb(actualcolor[0], actualcolor[1], actualcolor[2]))) 
     if debug :
         print   actualcolor 

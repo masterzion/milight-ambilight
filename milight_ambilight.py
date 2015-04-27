@@ -29,9 +29,10 @@ class MilightAmbilight():
                     print  " monitored points: " + str( x * interval ) + " - " + str ( y * interval )
                 monitoredpoints.append([x * interval, y * interval])
 
-        return monitoredpoints
+        self.__points = monitoredpoints
+        self.__count = len( monitoredpoints )+1
 
-    def CurrentColor(self, points, count):
+    def CurrentColor(self):
         # get screen point colors based in
         # http://stackoverflow.com/questions/27395968/get-screen-pixel-color-linux-python3
         w = gtk.gdk.get_default_root_window()
@@ -47,7 +48,7 @@ class MilightAmbilight():
         if self.debug :
             print "======="
 
-        for point in points:
+        for point in self.__points:
             color = pixel_array[point[1]] [point[0]]
             if self.debug :
                 print pixel_array[point[1]] [point[0]]
@@ -60,8 +61,8 @@ class MilightAmbilight():
             print "======="
 
         # divide by point count
-        red   = int ( red   / count ) + 10
-        green = int ( green / count ) + 10
-        blue  = int ( blue  / count ) + 10
+        red   = int ( red   / self.__count ) + 10
+        green = int ( green / self.__count ) + 10
+        blue  = int ( blue  / self.__count ) + 10
 
         return (red, green, blue)
