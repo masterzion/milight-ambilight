@@ -9,7 +9,7 @@
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="icon">migui.ico</property>
-    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <widget class="GtkNotebook" id="notebook1">
         <property name="visible">True</property>
@@ -32,7 +32,7 @@
                     <property name="xalign">0.50999999046325684</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_checkbutton1_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_checkbutton1_toggled"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -49,7 +49,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_checkbutton2_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_checkbutton2_toggled"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -66,7 +66,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_checkbutton3_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_checkbutton3_toggled"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -83,7 +83,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_checkbutton4_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_checkbutton4_toggled"/>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -105,7 +105,7 @@
                 <property name="double_buffered">False</property>
                 <property name="has_palette">True</property>
                 <property name="current_color">#ffffffffffff</property>
-                <signal name="color_changed" handler="on_colorselection1_color_changed" swapped="no"/>
+                <signal name="color_changed" handler="on_colorselection1_color_changed"/>
                 <child>
                   <placeholder/>
                 </child>
@@ -124,7 +124,7 @@
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
                 <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_checkambilight_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_checkambilight_toggled"/>
               </widget>
               <packing>
                 <property name="expand">True</property>
@@ -341,7 +341,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
-                        <signal name="clicked" handler="on_btnSave_clicked" swapped="no"/>
+                        <signal name="clicked" handler="on_btnSave_clicked"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>

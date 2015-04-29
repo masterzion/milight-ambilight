@@ -15,22 +15,23 @@ class MilightAmbilight():
             print  'interval: ' + str(interval)
 
 
-        countx = screensize[0] / interval
-        county = screensize[1] / interval
+        countx = int(screensize[0] / interval)
+        county = int(screensize[1] / interval)
 
         if self.debug :
-            print  str(countx) + 'x' + str(county)
+            print  'points count: ' + str(countx) + 'x' + str(county)
 
 
         monitoredpoints = []
-        for x in range(30, countx-10): # ignore the borders
-            for y in range(10, county-10): # ignore the borders
+        for x in range(3, countx-1): # ignore the borders
+            for y in range(1, county-1): # ignore the borders
                 if self.debug :
                     print  " monitored points: " + str( x * interval ) + " - " + str ( y * interval )
                 monitoredpoints.append([x * interval, y * interval])
 
         self.__points = monitoredpoints
         self.__count = len( monitoredpoints )+1
+        return self.__points
 
     def CurrentColor(self):
         # get screen point colors based in
@@ -45,8 +46,6 @@ class MilightAmbilight():
         red   = 0
         green = 0
         blue  = 0
-        if self.debug :
-            print "======="
 
         for point in self.__points:
             color = pixel_array[point[1]] [point[0]]

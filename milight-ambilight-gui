@@ -71,6 +71,7 @@ class ShowMain:
         self.controller.send(light.all_on())
 
         self.myAmbilight =  MilightAmbilight()
+        self.myAmbilight.debug = self.config.debug
         self.myAmbilight.MonitoredPoints( self.config.pixel_interval )
         self.set_color(self)
 
@@ -119,6 +120,13 @@ class ShowMain:
         self.config.time_interval     = self.wTree.get_widget("hscaleinterval").get_value() /  1000
         self.setTimerInterval ( self.wTree.get_widget("hscaleinterval").get_value() )
         self.config.debug             = self.wTree.get_widget("checkdebug").get_active() 
+
+        self.myAmbilight =  MilightAmbilight()
+        self.myAmbilight.debug = self.config.debug
+        print self.myAmbilight.MonitoredPoints( self.config.pixel_interval )
+
+
+        self.myAmbilight.debug = self.config.debug
         self.config.save_config()
 
     def setTimerInterval(self, TimerInterval):
