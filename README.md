@@ -1,4 +1,4 @@
-![LOGO](http://s18.postimg.org/7tdsn4tex/migui.png)
+![LOGO](https://raw.githubusercontent.com/masterzion/milight-ambilight/master/imgs/migui.png)
 
 
 
@@ -10,7 +10,7 @@ Let's make our movies and games more realistic? ;)
 
 
 MiLight Ambilight In Action!!!
-[![MiLight Ambilight in Action](http://s10.postimg.org/spmogyu7t/Screenshot_from_2015_04_29_04_37_11.png)](https://www.youtube.com/watch?v=VNhzjfAACFY)
+[![MiLight Ambilight in Action](https://raw.githubusercontent.com/masterzion/milight-ambilight/master/imgs/youtube.png)](https://www.youtube.com/watch?v=VNhzjfAACFY)
 
 
 
