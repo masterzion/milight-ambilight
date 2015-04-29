@@ -1,19 +1,20 @@
-# python-milight-screen-color
+![LOGO](http://s18.postimg.org/7tdsn4tex/migui.png)
+
+
+
+
 
 Get One single color to represent the screen and send to MiLight/LimitlessLed Connector.
 
 Let's make our movies and games more realistic? ;)
 
 
-[![Milight Home page](http://cdn2.bigcommerce.com/n-d57o0b/jesswyt/products/78/images/266/milight_bulb1__74439.1404685995.220.290.jpg?c=2)](http://www.milight.com/milight-rgbw/)
-
-
-
 MiLight Ambilight In Action!!!
-[![MiLight Ambilight in Action](http://s1.postimg.org/mag5ic2xr/Screenshot_from_2015_04_29_00_42_45.png)](https://www.youtube.com/watch?v=wM9c-cnaTaU)
+[![MiLight Ambilight in Action](http://s10.postimg.org/spmogyu7t/Screenshot_from_2015_04_29_04_37_11.png)](https://www.youtube.com/watch?v=VNhzjfAACFY)
 
 
 
+---
 
 **1) Instalation**
 ``` bash
@@ -54,3 +55,8 @@ debug: show current color
 
 
 ![GUI Interface](http://s24.postimg.org/nmwmecafp/milight_gui2.png)
+
+
+**Milight Home page**
+
+[![Milight Home page](http://cdn2.bigcommerce.com/n-d57o0b/jesswyt/products/78/images/266/milight_bulb1__74439.1404685995.220.290.jpg?c=2)](http://www.milight.com/milight-rgbw/)

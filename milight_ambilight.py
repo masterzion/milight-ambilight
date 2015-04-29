@@ -11,23 +11,24 @@ class MilightAmbilight():
         screensize = wx.GetDisplaySize()
 
         if self.debug :
+            print  "\n\n"
             print  screensize
             print  'interval: ' + str(interval)
 
 
-        countx = int(screensize[0] / interval)
-        county = int(screensize[1] / interval)
+        countx = int(screensize[0] / interval / 2) # focus on screen center
+        county = int(screensize[1] / interval / 2) # focus on screen center
 
         if self.debug :
             print  'points count: ' + str(countx) + 'x' + str(county)
 
 
         monitoredpoints = []
-        for x in range(3, countx-1): # ignore the borders
-            for y in range(1, county-1): # ignore the borders
+        for x in range(0, countx): # ignore the borders
+            for y in range(0, county): # ignore the borders
                 if self.debug :
                     print  " monitored points: " + str( x * interval ) + " - " + str ( y * interval )
-                monitoredpoints.append([x * interval, y * interval])
+                monitoredpoints.append([ (x + countx) * interval, (y + county)  * interval])
 
         self.__points = monitoredpoints
         self.__count = len( monitoredpoints )+1
