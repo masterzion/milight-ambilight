@@ -11,10 +11,9 @@ Let's make our movies and games more realistic? ;)
 
 MiLight Ambilight In Action!!! (click to play)
 
-[![MiLight Ambilight in Action](https://raw.githubusercontent.com/masterzion/milight-ambilight/master/imgs/youtube.png)
+[![MiLight Ambilight in Action](https://raw.githubusercontent.com/masterzion/milight-ambilight/master/imgs/youtube.png)](https://www.youtube.com/watch?v=VNhzjfAACFY)
 
 https://www.youtube.com/watch?v=VNhzjfAACFY
-](https://www.youtube.com/watch?v=VNhzjfAACFY)
 
 
 
