@@ -29,6 +29,14 @@ sudo apt-get install python-pip
 sudo pip install -U numpy
 
 sudo pip install milight
+
+```
+
+For GUI
+``` bash
+ sudo apt-get install python-glade2
+
+ sudo pip install gtk.glade
 ```
 
 **2) Configuration**
