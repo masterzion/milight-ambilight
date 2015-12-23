@@ -24,6 +24,8 @@ https://www.youtube.com/watch?v=VNhzjfAACFY
 ``` bash
 sudo apt-get install python-dev python-wxtools
 
+sudo apt-get install python-pip
+
 sudo pip install -U numpy
 
 sudo pip install milight
