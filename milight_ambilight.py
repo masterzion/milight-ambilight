@@ -1,3 +1,4 @@
+import pdb
 import gtk.gdk
 import wx
 
@@ -7,7 +8,8 @@ class MilightAmbilight():
         self.debug = False
 
     def MonitoredPoints(self, interval):
-        app = wx.PySimpleApp()
+#        app = wx.PySimpleApp()
+#        app = wx.App(False)
         screensize = wx.GetDisplaySize()
 
         if self.debug :

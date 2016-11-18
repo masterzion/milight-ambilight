@@ -1,9 +1,15 @@
 #!/usr/bin/env python
+import wx
+app = wx.App(False)
+
+
 import gtk
 import gtk.glade
 import milight
 import time
 import os
+
+
 
 
 from milight_config import MilightConfig
